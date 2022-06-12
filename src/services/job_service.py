@@ -20,15 +20,9 @@ class JobPositionService:
             job_position.id = str(uuid.uuid4())
         self.persistence_service.append(job_position)
 
-    def get_job_by_id(self, job_id):
-        #jobs = [job for job in self.persistence_service if job.get_id() == job_id]
-        jobs = []
-        print(job_id)
-        for job in self.persistence_service:
-            print(job)
-            if job.get_id() == job_id:
-                jobs.append(job)
+    def get_jobs_by_id(self, job_id):
+        jobs = [job for job in self.persistence_service if job.get_id() == job_id]
 
-        return jobs[0] if len(jobs) >= 1 else None
+        return jobs[:1] if len(jobs) >= 1 else []
 
 

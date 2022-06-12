@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-from src.job_service import JobPositionService
+from src.services.job_service import JobPositionService
 
 
 class JobPositionServiceTests(unittest.TestCase):
@@ -11,7 +11,7 @@ class JobPositionServiceTests(unittest.TestCase):
 
         self.assertIsNotNone(service.get_persistence_service())
 
-    @mock.patch('src.job_service.logging')
+    @mock.patch('src.services.job_service.logging')
     def test_store_job_position(self, mock_logger):
         service = JobPositionService()
         job_position = mock.Mock()
@@ -30,7 +30,7 @@ class JobPositionServiceTests(unittest.TestCase):
 
         self.assertEquals(len(service.get_all()), 2)
 
-    def test_get_job_by_id(self):
+    def test_get_jobs_by_id(self):
         service = JobPositionService()
         job_position = mock.Mock()
         job_position.get_id.return_value = '1'
@@ -39,16 +39,16 @@ class JobPositionServiceTests(unittest.TestCase):
         another_job_position.get_id.return_value = '2'
         service.store(another_job_position)
 
-        job = service.get_job_by_id('2')
+        job = service.get_jobs_by_id('2')
 
         self.assertEquals(job, another_job_position)
 
-    def test_get_job_by_id_fail(self):
+    def test_get_jobs_by_id_fail(self):
         service = JobPositionService()
         job_position = mock.Mock()
         job_position.get_id.return_value = '1'
         service.store(job_position)
 
-        job = service.get_job_by_id('2')
+        jobs = service.get_jobs_by_id('2')
 
-        self.assertIsNone(job)
+        self.assertEquals(jobs, [])
