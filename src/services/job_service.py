@@ -25,4 +25,15 @@ class JobPositionService:
 
         return jobs[:1] if len(jobs) >= 1 else []
 
+    def filter_jobs(self, filters):
+        filtered_jobs = self.persistence_service
+        for filter_object in filters:
+            filtered_jobs = filter_object.filter(filtered_jobs)
+
+        return filtered_jobs
+
+
+
+
+
 

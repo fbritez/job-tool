@@ -1,9 +1,10 @@
-from typing import List
-
+from typing import List, Union
+import logging
 from fastapi import APIRouter
 from starlette.responses import JSONResponse
 import starlette.status as status
 
+from src.filter.filters import generate_filter
 from src.model import JobPosition
 from src.services.job_service import JobPositionService
 
@@ -23,6 +24,21 @@ def create_job(job_position: JobPosition):
 @router.get("", responses={status.HTTP_200_OK: {"jobs": List[JobPosition]}})
 def all_jobs():
     jobs = service.get_all()
+    return jobs
+
+
+@router.get("/", responses={status.HTTP_200_OK: {"jobs": List[JobPosition]}})
+def filter_jobs(title: Union[str, None] = '',
+                description: Union[str, None] = '',
+                salary_min: Union[int, None] = 0,
+                salary_max: Union[int, None] = 0,
+                country: Union[str, None] = '',
+                tags: Union[List, None] = None):
+
+    filters = generate_filter(title, description, salary_min, salary_max, country, tags)
+    logging.info('Preparing filter for: %s', filters)
+    jobs = service.filter_jobs(filters)
+
     return jobs
 
 
