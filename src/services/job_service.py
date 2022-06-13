@@ -5,8 +5,9 @@ import logging
 
 class JobPositionService:
 
-    def __init__(self):
+    def __init__(self, listeners=None):
         self.persistence_service = []
+        self.listeners = listeners if listeners else []
 
     def get_persistence_service(self):
         return self.persistence_service
@@ -19,6 +20,12 @@ class JobPositionService:
         if not job_position.get_id():
             job_position.id = str(uuid.uuid4())
         self.persistence_service.append(job_position)
+
+        self.notify_listeners(job_position)
+
+    def notify_listeners(self, job_position):
+        for listener in self.listeners:
+            listener.push(job_position)
 
     def get_jobs_by_id(self, job_id):
         jobs = [job for job in self.persistence_service if job.get_id() == job_id]

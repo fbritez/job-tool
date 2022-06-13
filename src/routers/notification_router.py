@@ -15,9 +15,7 @@ router = APIRouter()
 class FakeEmailServer:
 
     def send(self, email, job):
-        logging.info(email)
-        logging.info(job)
-
+        logging.info('Email Sent')
 
 service = NotificationService(FakeEmailServer())
 

@@ -5,12 +5,13 @@ from starlette.responses import JSONResponse
 import starlette.status as status
 
 from src.filter.filters import generate_filter
+from src.listener.listener import ExternalListener
 from src.model import JobPosition
 from src.services.job_service import JobPositionService
 
 router = APIRouter()
 
-service = JobPositionService()
+service = JobPositionService(listeners=[ExternalListener('http://127.0.0.1:8000/notifications/notify')])
 
 
 @router.post("")
