@@ -61,9 +61,9 @@ def generate_filter(title, description, salary_min, salary_max, country, tags):
     if description:
         filters.append(ContainsFilter('description', description))
     if salary_min:
-        filters.append(GreaterThanFilter('salary_min', salary_min))
+        filters.append(GreaterThanFilter('salary', salary_min))
     if salary_max:
-        filters.append(LessThanFilter('salary_max', salary_max))
+        filters.append(LessThanFilter('salary', salary_max))
     if country:
         filters.append(EqualsThanFilter('country', country))
     if tags:
