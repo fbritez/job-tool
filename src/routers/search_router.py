@@ -37,17 +37,17 @@ service = SearchService([ExternalSource(source_url='http://127.0.0.1:8000/jobs/'
 def log_parameters(title, description, salary_min, salary_max, country, tags):
     values = ''
     if title:
-        values = values = ' - title: ' + title
+        values = values + ' - title: ' + title
     if description:
-        values = values = ' - description: ' + description
+        values = values + ' - description: ' + description
     if salary_min:
-        values = values = ' - salary_min: ' + salary_min
+        values = values + ' - salary_min: ' + str(salary_min)
     if salary_max:
-        values = values = ' - salary_max: ' + salary_max
+        values = values + ' - salary_max: ' + str(salary_max)
     if country:
-        values = values = ' - country: ' + country
+        values = values + ' - country: ' + country
     if tags:
-        values = values = ' - tags: ' + tags
+        values = values + ' - tags: ' + str(tags)
 
     logging.info('Seargh paramters: %s', values)
 
